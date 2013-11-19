@@ -17,6 +17,7 @@ js-base-model solves the aforementioned issues.
 ## Features
  - type-checking for properties
  - constraint validation (required, blank, and choice for now)
+ - multiple levels of inheritance are supported
 
 ## Requirements
  - [Underscore.js](http://underscorejs.org/)
