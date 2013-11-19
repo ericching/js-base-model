@@ -18,6 +18,9 @@ js-base-model solves the aforementioned issues.
  - type-checking for properties
  - constraint validation (required, blank, and choice for now)
 
+## Requirements
+ - [Underscore.js](http://underscorejs.org/)
+
 ## Usage
 ```javascript
 // AddressModel
