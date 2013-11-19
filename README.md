@@ -79,7 +79,7 @@ BaseModel.extendedBy(
             choice: ['M', 'F']
         },
         address: {
-            type: Address,
+            type: AddressModel,
             required: false
         }
     }
