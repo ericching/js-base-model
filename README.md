@@ -87,7 +87,7 @@ BaseModel.extendedBy(
 ```
 
 ## Meteor Support
-[Meteor][http://www.meteor.com] is an open-source platform based on Node.js. It handles domain model in the JSON format.
+[Meteor](http://www.meteor.com) is an open-source platform based on Node.js. It handles domain model in the JSON format.
 
 js-base-model works well with Meteor. With this class you can define strongly-typed domain models while enjoying the benefits of this incredible platform.
 
