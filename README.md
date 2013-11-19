@@ -18,7 +18,7 @@ js-base-model solves the aforementioned issues.
  - type-checking for properties
  - constraint validation (required, blank, and choice for now)
 
-## Usage:
+## Usage
 ```javascript
 // AddressModel
 AddressModel = function (document, transformFromDb) {
