@@ -186,10 +186,6 @@ BaseModel.prototype = {
             return true;
         }
 
-        if (logger.isTraceEnabled('baseModel')) {
-            logger.trace('baseModel', 'validateConstraintType: property=' + property + ', constraintType=' + constraintType + ', constraintValue=' + constraintValue + ', value=' + value);
-        }
-
         if (this.isInstanceOfBaseModel(constraintValue)) {
             var typeName = this.retrieveModelClassName(constraintValue);
             if (value.__class__) {
@@ -231,10 +227,6 @@ BaseModel.prototype = {
     },
 
     validateConstraintRequired: function (property, constraintType, constraintValue) {
-        if (logger.isTraceEnabled('baseModel')) {
-            logger.trace('baseModel', 'validateConstraintRequired: property=' + property + ', constraintType=' + constraintType + ', constraintValue=' + constraintValue);
-        }
-
         if (constraintValue && jsType.isUndefinedOrNull(this[property])) {
             return new ConstraintError(property, constraintType, constraintValue, "required");
         }
@@ -242,10 +234,6 @@ BaseModel.prototype = {
     },
 
     validateConstraintBlank: function (property, constraintType, constraintValue) {
-        if (logger.isTraceEnabled('baseModel')) {
-            logger.trace('baseModel', 'validateConstraintBlank: property=' + property + ', constraintType=' + constraintType + ', constraintValue=' + constraintValue);
-        }
-
         if (!constraintValue && jsType.isBlank(this[property])) {
             return new ConstraintError(property, constraintType, constraintValue, "blank");
         }
@@ -253,10 +241,6 @@ BaseModel.prototype = {
     },
 
     validateConstraintChoice: function (property, constraintType, constraintValue) {
-        if (logger.isTraceEnabled('baseModel')) {
-            logger.trace('baseModel', 'validateConstraintChoice: property=' + property + ', constraintType=' + constraintType + ', constraintValue=' + constraintValue);
-        }
-
         if (!jsType.isArray(constraintValue)) {
             throw new Error("Invalid choice: " + constraintValue);
         }

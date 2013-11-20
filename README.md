@@ -1,10 +1,10 @@
 # js-base-model
 
-JavaScript supports the JSON format natively, which makes it the preferred way to define a domain model with it. Since JavaScript is a loose-typing language, defining your domain model this way comes with several shortcomings:
+JavaScript supports the JSON format natively, which makes it the preferred way to define a domain model with it. Since JavaScript is a loosely typed language, defining your domain model this way comes with several shortcomings:
 
  - No type-checking:
     - You cannot define a property to be of a specific type, e.g. boolean, string, a prototype object, etc.
-    - A boolean property can accept any value without throwing an error, e.g. "true", {}, ["true"], true, etc.
+    - A boolean property, for example, can accept any value without throwing an error, e.g. "true", {}, ["true"], true, etc.
  - No constraint validation:
     - You cannot guarantee that certain properties in your domain model are required fields.
     - You cannot guarantee that certain properties can only accept non-blank values.
@@ -77,6 +77,9 @@ BaseModel.extendedBy(
             required: true,
             blank: false
         },
+        age: {
+            type: "number"
+        },
         gender: {
             type: "string",
             required: true,
@@ -93,6 +96,7 @@ BaseModel.extendedBy(
 var user = new UserModel({
     name: "John Doe",
     gender: "M",
+    age: 21,
     address: new AddressModel({
         street1: "1 Test Drive",
         city: "Test City",
@@ -129,3 +133,6 @@ UserCollection.insert(userModel.toJSON());
 [Collection API](https://github.com/crazytoad/meteor-collectionapi) provides a RESTful service for a collection.
 
 To support js-base-model, add src/meteor/collection-api/collectionApiOverride.js to your library.
+
+## Unit Tests
+Unit tests are available in test/baseModel.js and relies on [CasperJS](http://casperjs.org).
