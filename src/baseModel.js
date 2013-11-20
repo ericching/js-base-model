@@ -1,71 +1,7 @@
 /*
- * Provides type-checking for JavaScript.
+ * This object is the base class for domain models to extend from.
  *
- * Examples:
- * jsType.isObject({}); // true
- * jsType.isNumber(NaN); // false
- * jsType.isElement(document.createElement('div')); // true
- * jsType.isRegExp(/abc/); // true
- * jsType.isEmpty(""); // true
- */
-jsType = function (o) {
-    if (o === null) {
-        return 'null';
-    }
-
-    if (o === undefined) {
-        return 'undefined';
-    }
-
-    if (o && (o.nodeType === 1 || o.nodeType === 9)) { // handle DOM elements
-        return 'element';
-    }
-
-    var s = Object.prototype.toString.call(o);
-    var type = s.match(/\[object (.*?)\]/)[1].toLowerCase();
-
-    if (type === 'number') {
-        if (isNaN(o)) {
-            return 'nan';
-        }
-        if (!isFinite(o)) {
-            return 'infinity';
-        }
-    }
-
-    return type;
-};
-
-[
-    'Undefined',
-    'Null',
-    'Object',
-    'Array',
-    'String',
-    'Number',
-    'Boolean',
-    'Function',
-    'RegExp',
-    'Element',
-    'NaN',
-    'Infinite'
-].forEach(function (t) {
-        jsType['is' + t] = function (o) {
-            return jsType(o) === t.toLowerCase();
-        };
-    });
-
-jsType["isUndefinedOrNull"] = function (o) {
-    return jsType.isNull(o) || jsType.isUndefined(o);
-};
-
-jsType["isBlank"] = function (o) {
-    return (jsType.isString(o) && o.length == 0);
-};
-
-
-/*
- * This prototype object is the base class for domain models to extend from.
+ * Documentation: https://github.com/ericching/js-base-model
  *
  * Author: Eric Ching
  */
@@ -82,7 +18,7 @@ BaseModel = function (className, document, transformFromDb) {
 };
 
 BaseModel.extendedBy = function (childModel, constraints) {
-    if (!jsType.isObject(constraints)) {
+    if (!_.isObject(constraints)) {
         throw new Error("Invalid constraints");
     }
     childModel.prototype = Object.create(this.prototype);
@@ -132,13 +68,13 @@ BaseModel.prototype = {
      */
     validate: function () {
         var props = this.properties();
-        if (jsType.isObject(this.constraints)) {
+        if (_.isObject(this.constraints)) {
             var errors = [];
             for (var property in this.constraints) {
                 delete props[property];
                 for (var constraintType in this.constraints[property]) {
                     var constraintValue = this.constraints[property][constraintType];
-                    if (!jsType.isUndefinedOrNull(constraintValue)) {
+                    if (!(_.isUndefined(constraintValue) || _.isNull(constraintValue))) {
                         var error = this.validateConstraint(property, constraintType, constraintValue);
                         if (error instanceof ConstraintError) {
                             errors.push(error);
@@ -165,7 +101,7 @@ BaseModel.prototype = {
                 continue;
             }
             var value = this[property];
-            if (this.hasOwnProperty(property) && !jsType.isFunction(value)) {
+            if (this.hasOwnProperty(property) && !_.isFunction(value)) {
                 map[property] = value;
             }
         }
@@ -182,7 +118,7 @@ BaseModel.prototype = {
 
     validateConstraintType: function (property, constraintType, constraintValue) {
         var value = this[property];
-        if (jsType.isUndefinedOrNull(value)) {
+        if (_.isUndefined(value) || _.isNull(value)) {
             return true;
         }
 
@@ -201,8 +137,8 @@ BaseModel.prototype = {
             return value.validate();
         }
         var typeName = constraintValue.charAt(0).toUpperCase() + constraintValue.slice(1);
-        var jsTypeMethodName = 'is' + typeName;
-        if (!jsType[jsTypeMethodName] || !jsType[jsTypeMethodName](value)) {
+        var typeMethodName = 'is' + typeName;
+        if (!_[typeMethodName] || !_[typeMethodName](value)) {
             return new ConstraintError(property, constraintType, constraintValue, "not of type " + constraintValue);
         }
         if ('array' === constraintValue) {
@@ -227,25 +163,25 @@ BaseModel.prototype = {
     },
 
     validateConstraintRequired: function (property, constraintType, constraintValue) {
-        if (constraintValue && jsType.isUndefinedOrNull(this[property])) {
+        if (constraintValue && (_.isUndefined(this[property]) || _.isNull(this[property]))) {
             return new ConstraintError(property, constraintType, constraintValue, "required");
         }
         return true;
     },
 
     validateConstraintBlank: function (property, constraintType, constraintValue) {
-        if (!constraintValue && jsType.isBlank(this[property])) {
+        if (!constraintValue && _.isString(this[property]) && this[property].length == 0) {
             return new ConstraintError(property, constraintType, constraintValue, "blank");
         }
         return true;
     },
 
     validateConstraintChoice: function (property, constraintType, constraintValue) {
-        if (!jsType.isArray(constraintValue)) {
+        if (!_.isArray(constraintValue)) {
             throw new Error("Invalid choice: " + constraintValue);
         }
         var value = this[property];
-        if (!jsType.isUndefinedOrNull(value)) {
+        if (!(_.isUndefined(value) || _.isNull(value))) {
             var i = constraintValue.length;
             while (i--) {
                 if (constraintValue[i] == value) {
@@ -300,7 +236,7 @@ BaseModel.prototype = {
                 fn = fn[arr[i]];
             }
 
-            if (!jsType.isFunction(fn)) {
+            if (!_.isFunction(fn)) {
                 throw new Error("Function not found: " + str);
             }
 
@@ -312,7 +248,7 @@ BaseModel.prototype = {
 
     // Convert properties to JSON object
     toJSON: function (props) {
-        var properties = jsType.isUndefinedOrNull(props) ? this.properties() : props;
+        var properties = (_.isUndefined(props) || _.isNull(props)) ? this.properties() : props;
         var json = {};
         for (var key in properties) {
             if (key.indexOf('_') == 0) {
@@ -322,15 +258,14 @@ BaseModel.prototype = {
             if (this.isInstanceOfBaseModel(value) || this.isInstanceOfBaseModel(value.constructor)) {
                 json[key] = this.toJSON(value.properties());
             } else {
-                if (!jsType.isFunction(value)) {
+                if (!_.isFunction(value)) {
                     json[key] = value;
                 }
             }
         }
         return json;
     }
-}
-;
+};
 
 ConstraintError = function (property, type, value, msg) {
     this.property = property;
