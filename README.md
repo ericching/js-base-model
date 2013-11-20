@@ -24,7 +24,7 @@ js-base-model solves the aforementioned issues.
 
 ## Usage
 ```javascript
-// AddressModel
+// AddressModel Definition
 AddressModel = function (document, transformFromDb) {
     BaseModel.call(this, 'AddressModel', document, transformFromDb);
 };
@@ -64,7 +64,7 @@ BaseModel.extendedBy(
      }
 );
 
-// UserModel
+// UserModel Definition
 UserModel = function (document, transformFromDb) {
     BaseModel.call(this, 'UserModel', document, transformFromDb);
 };
@@ -88,6 +88,19 @@ BaseModel.extendedBy(
         }
     }
 );
+
+// User instantiation
+var user = new UserModel({
+    name: "John Doe",
+    gender: "M",
+    address: new AddressModel({
+        street1: "1 Test Drive",
+        city: "Test City",
+        stateOrProvince: "Test State",
+        zipOrPostalCode: "12345",
+        country: "United States"
+    });
+});
 ```
 
 ## Meteor Support
