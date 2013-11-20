@@ -111,3 +111,8 @@ To save a domain model to a collection:
 ```javascript
 UserCollection.insert(userModel.toJSON());
 ```
+
+### Meteor Collection API Support
+[Collection API](https://github.com/crazytoad/meteor-collectionapi) provides a RESTful service for a collection.
+
+To support js-base-model, add src/meteor/collection-api/collectionApiOverride.js to your library.
