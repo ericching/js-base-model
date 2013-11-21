@@ -141,5 +141,31 @@ UserCollection.insert(user.toJSON());
 
 To support js-base-model, add src/meteor/collection-api/collectionApiOverride.js to your library.
 
+### Installation
+1. Install Meteorite so that you can install third-party packages.
+```
+sudo -H npm install -g meteorite
+```
+
+2. Add the following line to <PROJECT>/smart.json inside "packages", e.g.:
+```
+{
+    "packages": {
+        ...
+        "js-base-model": {}
+    }
+}
+```
+
+3. Add the following line to the end of <PROJECT>/.meteor/packages:
+```
+ js-base-model
+```
+
+4. Install the js-base-model smart package:
+```
+mrt install
+```
+
 ## Unit Tests
 Unit tests are available in test/baseModel.js and relies on [CasperJS](http://casperjs.org).
