@@ -149,11 +149,9 @@ sudo -H npm install -g meteorite
 
 2. Add the following line to <PROJECT>/smart.json inside "packages", e.g.:
 ```
-{
-    "packages": {
-        ...
-        "js-base-model": {}
-    }
+"packages": {
+    ...
+    "js-base-model": {}
 }
 ```
 
