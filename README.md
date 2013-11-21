@@ -23,6 +23,7 @@ js-base-model solves the aforementioned issues.
  - [Underscore.js](http://underscorejs.org/)
 
 ## Usage
+### Defining the Model(s)
 ```javascript
 // AddressModel Definition
 AddressModel = function (document, transformFromDb) {
@@ -92,7 +93,8 @@ BaseModel.extendedBy(
     }
 );
 
-// User instantiation
+### Instantiating a Model
+```javascript
 var user = new UserModel({
     name: "John Doe",
     gender: "M",
@@ -105,6 +107,11 @@ var user = new UserModel({
         country: "United States"
     });
 });
+```
+
+### Converting the Model to JSON
+```javascript
+var json = user.toJSON();
 ```
 
 ## Meteor Support
@@ -126,7 +133,7 @@ UserCollection = new Meteor.Collection('User', {
 
 To save a domain model to a collection:
 ```javascript
-UserCollection.insert(userModel.toJSON());
+UserCollection.insert(user.toJSON());
 ```
 
 ### Meteor Collection API Support
