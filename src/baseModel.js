@@ -281,18 +281,3 @@ ConstraintError.prototype.toString = function () {
         ", value=" + this.value +
         ", msg=" + this.msg + "}";
 }
-
-// I18NText is defined here due to a circular dependency issue
-// I18NText Model
-I18NText = function (document, transformFromDb) {
-    BaseModel.call(this, 'I18NText', document, transformFromDb);
-};
-
-BaseModel.extendedBy(I18NText, {
-    english: {
-        type: "string"
-    },
-    french: {
-        type: "string"
-    }
-});
