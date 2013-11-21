@@ -5,6 +5,7 @@
  *
  * Author: Eric Ching
  */
+
 BaseModel = function (className, document, transformFromDb) {
     this.__class__ = className;
     this.__errors__ = null;
