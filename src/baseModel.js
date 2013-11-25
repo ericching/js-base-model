@@ -251,6 +251,9 @@ BaseModel.prototype = {
     toJSON: function (props) {
         var properties = (_.isUndefined(props) || _.isNull(props)) ? this.properties() : props;
         var json = {};
+        if (this._id) { // MongoDB document id
+            json._id = this._id;
+        }
         for (var key in properties) {
             if (key.indexOf('__') == 0) {
                 continue;
