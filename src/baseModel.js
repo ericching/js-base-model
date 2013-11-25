@@ -249,10 +249,15 @@ BaseModel.prototype = {
 
     // Convert properties to JSON object
     toJSON: function (props) {
-        var properties = (_.isUndefined(props) || _.isNull(props)) ? this.properties() : props;
+        var properties;
         var json = {};
-        if (this._id) { // MongoDB document id
-            json._id = this._id;
+        if (_.isUndefined(props) || _.isNull(props)) {
+            properties = this.properties();
+            if (this._id) { // MongoDB document id
+                json._id = this._id;
+            }
+        } else {
+            properties = props;
         }
         for (var key in properties) {
             if (key.indexOf('__') == 0) {

@@ -15,7 +15,7 @@ JavaScript supports the JSON format natively, which makes it the preferred way t
 js-base-model solves the aforementioned issues.
 
 ## What's New
-### 0.1.2
+### 0.1.4
  - Fixed a bug in toJSON() that omits the _id property that Meteor uses.
 
 ### 0.1.0
