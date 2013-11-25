@@ -252,7 +252,7 @@ BaseModel.prototype = {
         var properties = (_.isUndefined(props) || _.isNull(props)) ? this.properties() : props;
         var json = {};
         for (var key in properties) {
-            if (key.indexOf('_') == 0) {
+            if (key.indexOf('__') == 0) {
                 continue;
             }
             var value = properties[key];

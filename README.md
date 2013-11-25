@@ -14,6 +14,13 @@ JavaScript supports the JSON format natively, which makes it the preferred way t
 
 js-base-model solves the aforementioned issues.
 
+## What's New
+### 0.1.1
+ - Fixed a bug in toJSON() that omits the _id property that Meteor uses.
+
+### 0.1.0
+ - First release.
+
 ## Features
  - type-checking for properties
  - constraint validation (required, blank, and choice for now)
@@ -23,6 +30,11 @@ js-base-model solves the aforementioned issues.
  - [Underscore.js](http://underscorejs.org/)
 
 ## Usage
+### Supported Constraints
+ - type: "boolean", "number", "string", or a base model instance, e.g. AddressModel.
+ - required: true or false
+ - blank: true or false (for "string" type only)
+
 ### Defining the Model(s)
 ```javascript
 // AddressModel Definition
