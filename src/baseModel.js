@@ -6,10 +6,10 @@
  * Author: Eric Ching
  */
 
-BaseModel = function (className, document, transformFromDb) {
+BaseModel = function (className, document, documentElementsAreStringified) {
     this.__class__ = className;
     this.__errors__ = null;
-    if (transformFromDb) {
+    if (documentElementsAreStringified) {
         this.assignProperties(document);
     } else {
         _.extend(this, document);
@@ -266,6 +266,12 @@ BaseModel.prototype = {
             var value = properties[key];
             if (this.isInstanceOfBaseModel(value) || this.isInstanceOfBaseModel(value.constructor)) {
                 json[key] = this.toJSON(value.properties());
+            } else if (_.isArray(value)) {
+                var list = [];
+                for (var i = 0; i < value.length; i++) {
+                    list.push(value[i].toJSON());
+                }
+                json[key] = list;
             } else {
                 if (!_.isFunction(value)) {
                     json[key] = value;
