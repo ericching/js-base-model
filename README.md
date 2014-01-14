@@ -1,3 +1,19 @@
+[![alt text][1.1]][1]
+[![alt text][2.1]][2]
+
+<!-- icons with padding -->
+
+[1.1]: http://i.imgur.com/tXSoThF.png (twitter icon with padding)
+[2.1]: http://i.imgur.com/0o48UoR.png (github icon with padding)
+
+<!-- icons without padding -->
+
+[1.2]: http://i.imgur.com/wWzX9uB.png (twitter icon without padding)
+[2.2]: http://i.imgur.com/9I6NRUm.png (github icon without padding)
+
+[1]: http://www.twitter.com/innovaeinc
+[2]: http://www.github.com/ericching
+
 # js-base-model
 
 JavaScript supports the JSON format natively, which makes it the preferred way to define a domain model with it. Since JavaScript is a loosely typed language, defining your domain model this way comes with several shortcomings:
