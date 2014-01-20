@@ -264,7 +264,7 @@ BaseModel.prototype = {
                 continue;
             }
             var value = properties[key];
-            if (this.isInstanceOfBaseModel(value) || this.isInstanceOfBaseModel(value.constructor)) {
+            if (this.isInstanceOfBaseModel(value) || (value.constructor && this.isInstanceOfBaseModel(value.constructor))) {
                 json[key] = this.toJSON(value.properties());
             } else if (_.isArray(value)) {
                 var list = [];
