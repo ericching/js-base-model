@@ -270,6 +270,9 @@ BaseModel.prototype = {
             } else if (_.isArray(value)) {
                 var list = [];
                 for (var i = 0; i < value.length; i++) {
+                    if (!value[i]) {
+                        continue;
+                    }
                     if (_.isFunction(value[i].toJSON)) {
                         list.push(value[i].toJSON());
                     } else {
