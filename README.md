@@ -43,6 +43,8 @@ js-base-model solves the aforementioned issues.
  - type: "boolean", "number", "string", or a base model instance, e.g. AddressModel.
  - required: true or false
  - blank: true or false (for "string" type only)
+ - minLength: the minimum number of characters for type "string"
+ - maxLength: the maximum number of characters for type "string"
 
 ### Defining the Model(s)
 ```javascript
@@ -57,7 +59,9 @@ BaseModel.extendedBy(
         street1: {
             type: "string",
             required: true,
-            blank: false
+            blank: false,
+            minLength: 5,
+            maxLength: 80
         },
         street2: {
             type: "string",
@@ -97,7 +101,8 @@ BaseModel.extendedBy(
         name: {
             type: "string",
             required: true,
-            blank: false
+            blank: false,
+            maxLength: 80
         },
         age: {
             type: "number"
@@ -113,6 +118,7 @@ BaseModel.extendedBy(
         }
     }
 );
+```
 
 ### Instantiating a Model
 ```javascript
@@ -149,7 +155,6 @@ UserCollection = new Meteor.Collection('User', {
         return new UserModel(document, true);
     }
 });
-
 ```
 
 To save a domain model to a collection:
@@ -188,3 +193,5 @@ mrt install
 
 ## Unit Tests
 Unit tests are available in test/baseModel.js and relies on [CasperJS](http://casperjs.org).
+
+### Test script: test/test.sh

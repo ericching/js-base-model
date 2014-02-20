@@ -2,9 +2,25 @@
  * Unit tests using CasperJS (http://casperjs.org)
  */
 
+var I18NText = function (document, transformFromDb) {
+    BaseModel.call(this, 'I18NText', document, transformFromDb);
+};
+BaseModel.extendedBy(I18NText, {
+    en: {
+        type: "string"
+    },
+    fr: {
+        type: "string"
+    }
+});
+
 casper.test.begin('Test baseModel.js', function (test) {
-    var testConstraint = function(testName, jsonDoc, constraints, errorMessage) {
+    var TestModel;
+    var testConstraint = function (testName, jsonDoc, constraints, errorMessage) {
         try {
+            TestModel = function (document) {
+                BaseModel.call(this, 'TestModel', document);
+            };
             BaseModel.extendedBy(TestModel, constraints);
             var model = new TestModel(jsonDoc);
             test.pass(testName);
@@ -51,10 +67,6 @@ casper.test.begin('Test baseModel.js', function (test) {
     };
     BaseModel.extendedBy(ChildModel, childModelConstraints);
 
-    var TestModel = function (document) {
-        BaseModel.call(this, 'TestModel', document);
-    };
-
     var constraints = {
         name: {
             type: "string",
@@ -70,7 +82,8 @@ casper.test.begin('Test baseModel.js', function (test) {
             type: "array"
         },
         flag: {
-            type: "boolean"        }
+            type: "boolean"
+        }
     };
 
     testConstraint('Test an empty document.', {}, constraints, 'TestModel constraint errors=[name: required, gender: required]');
@@ -121,8 +134,8 @@ casper.test.begin('Test baseModel.js', function (test) {
 
     var childModel = new ChildModel({
         name: new I18NText({
-            english: "English Name",
-            french: "French Name"
+            en: "English Name",
+            fr: "French Name"
         })
     });
 
@@ -186,7 +199,7 @@ casper.test.begin('Test baseModel.js', function (test) {
 
     var grandChildModel = new GrandChildModel({
         name: new I18NText({
-            french: "French Grand Child Name"
+            fr: "French Grand Child Name"
         })
     });
     childModel.grandChild = grandChildModel;
@@ -203,7 +216,7 @@ casper.test.begin('Test baseModel.js', function (test) {
         'GrandChildModel constraint error=[name: required]'
     );
 
-    grandChildModel.name.english = "English Grand Child Name";
+    grandChildModel.name.en = "English Grand Child Name";
     childModel.grandChild = grandChildModel;
     testConstraint(
         'All three levels of properties that are valid will pass validation.',
@@ -216,6 +229,41 @@ casper.test.begin('Test baseModel.js', function (test) {
         },
         constraints,
         'GrandChildModel constraint error=[name: required]'
+    );
+
+    constraints = {
+        name: {
+            type: 'string',
+            required: true,
+            minLength: 5,
+            maxLength: 10
+        }
+    };
+    testConstraint(
+        'The min length fails if the string is too short',
+        {
+            name: "Joe"
+        },
+        constraints,
+        'TestModel constraint error=[name: minLength]'
+    );
+
+    testConstraint(
+        'The max length fails if the string is too long',
+        {
+            name: "Flappy Bird is so stupid!"
+        },
+        constraints,
+        'TestModel constraint error=[name: maxLength]'
+    );
+
+    testConstraint(
+        'The min and max lengths pass if the string length fits the criteria',
+        {
+            name: "Flappy"
+        },
+        constraints,
+        ''
     );
 
     test.done();
