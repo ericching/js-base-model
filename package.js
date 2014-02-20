@@ -13,5 +13,5 @@ Package.on_use(function (api) {
 });
 
 Package.on_test(function (api) {
-    api.add_files('test/baseModel.js', ['client', 'server']);
+    api.add_files('test/baseModelTest.js', ['client', 'server']);
 });
