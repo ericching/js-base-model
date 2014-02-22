@@ -140,7 +140,6 @@ BaseModel.prototype = {
         var typeName = constraintValue.charAt(0).toUpperCase() + constraintValue.slice(1);
         var typeMethodName = 'is' + typeName;
         if (!_[typeMethodName] || !_[typeMethodName](value)) {
-console.log('##### property='+property+', value='+(value?JSON.stringify(value)+' ('+typeof(value)+')':null)+', typeMethodName='+typeMethodName+', _[typeMethodName]='+(_[typeMethodName]?_[typeMethodName]:'undefined')+', _[typeMethodName]('+value+')='+(_[typeMethodName]?JSON.stringify(_[typeMethodName](value)):'undefined'));
             return new ConstraintError(property, constraintType, constraintValue, "not of type " + constraintValue);
         }
         if ('array' === constraintValue) {
