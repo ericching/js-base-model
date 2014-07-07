@@ -6,15 +6,26 @@
  * Author: Eric Ching
  */
 
-BaseModel = function (className, document, documentElementsAreStringified) {
+/**
+ * Constructor.
+ * @param className the class name, e.g. "AddressModel"
+ * @param document the model data
+ * @param documentElementsAreStringified true to transform MongoDB documents obtained in a fetch, findOne or find call.
+ * @param validateModel true to validate the document upon instantiation
+ * @returns {BaseModel}
+ * @constructor
+ */
+BaseModel = function (className, document, documentElementsAreStringified, validateModel) {
     this.__class__ = className;
     this.__errors__ = null;
-    if (documentElementsAreStringified) {
+    if (!_.isUndefined(documentElementsAreStringified) && documentElementsAreStringified) {
         this.assignProperties(document);
     } else {
         _.extend(this, document);
     }
-    this.validate();
+    if (_.isUndefined(validateModel) || validateModel) {
+        this.validate();
+    }
     return this;
 };
 

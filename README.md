@@ -33,7 +33,6 @@ js-base-model solves the aforementioned issues.
 ## Features
  - type-checking for properties
  - constraint validation (required, blank, and choice for now)
- - multiple levels of inheritance are supported
 
 ## Requirements
  - [Underscore.js](http://underscorejs.org/)
@@ -49,8 +48,8 @@ js-base-model solves the aforementioned issues.
 ### Defining the Model(s)
 ```javascript
 // AddressModel Definition
-AddressModel = function (document, transformFromDb) {
-    BaseModel.call(this, 'AddressModel', document, transformFromDb);
+AddressModel = function (document, transformFromDB, validateModel) {
+    BaseModel.call(this, 'AddressModel', document, transformFromDB, validateModel);
 };
 
 BaseModel.extendedBy(
@@ -91,8 +90,8 @@ BaseModel.extendedBy(
 );
 
 // UserModel Definition
-UserModel = function (document, transformFromDb) {
-    BaseModel.call(this, 'UserModel', document, transformFromDb);
+UserModel = function (document, transformFromDB, validateModel) {
+    BaseModel.call(this, 'UserModel', document, transformFromDB, validateModel);
 };
 
 BaseModel.extendedBy(
@@ -152,7 +151,7 @@ UserCollection = new Meteor.Collection('User', {
     // Transform MongoDB documents before they're returned in a fetch, findOne or find call,
     // and before they are passed to observer callbacks.
     transform: function (document) {
-        return new UserModel(document, true);
+        return new UserModel(document, true, true);
     }
 });
 ```
