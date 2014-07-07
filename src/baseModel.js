@@ -10,8 +10,8 @@
  * Constructor.
  * @param className the class name, e.g. "AddressModel"
  * @param document the model data
- * @param documentElementsAreStringified true to transform MongoDB documents obtained in a fetch, findOne or find call.
- * @param validateModel true to validate the document upon instantiation
+ * @param documentElementsAreStringified true to transform MongoDB documents obtained in a fetch, findOne or find call (the default is false).
+ * @param validateModel true to validate the document upon instantiation (the default is true).
  * @returns {BaseModel}
  * @constructor
  */

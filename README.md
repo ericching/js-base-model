@@ -24,6 +24,9 @@ JavaScript supports the JSON format natively, which makes it the preferred way t
 js-base-model solves the aforementioned issues.
 
 ## What's New
+### 0.2.3
+ - Add the validateModel flag to the constructor. Set it to false to not validate the model upon instantiation. The default is true.
+
 ### 0.1.4
  - Fixed a bug in toJSON() that omits the _id property that Meteor uses.
 
