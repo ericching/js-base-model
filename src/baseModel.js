@@ -19,7 +19,7 @@ BaseModel = function (className, document, documentElementsAreStringified, valid
     this.__class__ = className;
     this.__errors__ = null;
     if (!_.isUndefined(documentElementsAreStringified) && documentElementsAreStringified) {
-        this.assignProperties(document);
+        this.assignProperties(document, validateModel);
     } else {
         _.extend(this, document);
     }
@@ -46,7 +46,7 @@ BaseModel.extendedBy = function (childModel, constraints) {
 BaseModel.prototype = {
     constructor: BaseModel,
 
-    assignProperties: function (document) {
+    assignProperties: function (document, validateModel) {
         if (!document) {
             return;
         }
@@ -60,7 +60,7 @@ BaseModel.prototype = {
             var constraint = this.constraints[key];
             if (this.propertyIsOfTypeBaseModel(constraint)) {
                 var Model = constraint['type'];
-                this[key] = new Model(value, true);
+                this[key] = new Model(value, true, validateModel);
             } else {
                 this[key] = value;
             }
