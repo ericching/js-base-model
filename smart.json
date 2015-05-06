@@ -1,9 +1,0 @@
-{
-    "name": "js-base-model",
-    "description": "Provides an extensible model that supports type-checking and constraint validation.",
-    "homepage": "https://github.com/ericching/js-base-model",
-    "author": "Eric Ching",
-    "version": "0.2.4",
-    "git": "https://github.com/ericching/js-base-model.git",
-    "packages": {}
-}
