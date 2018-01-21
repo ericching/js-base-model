@@ -244,7 +244,7 @@ BaseModel.prototype = {
 
     isInstanceOfBaseModel: function (obj) {
         if (obj) {
-            var arr = obj.toString().match(/function\s*\([^\)]+\)\s*{[\s\r\n]*(\w+)\.call/);
+            var arr = obj.toString().replace(/\/\/ [0-9]+/g, '').match(/function\s*\([^\)]+\)\s*{[\s\r\n]*(\w+)\.call/);
             if (arr && arr.length >= 2) {
                 return (arr[1] === 'BaseModel');
             }
