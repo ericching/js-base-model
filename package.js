@@ -1,7 +1,7 @@
 Package.describe({
     documentation: "README.md",
     summary: "Base model with type-checking and constraint validation",
-    version: "0.2.5",
+    version: "0.2.6",
     git: "https://github.com/ericching/js-base-model.git"
 });
 
